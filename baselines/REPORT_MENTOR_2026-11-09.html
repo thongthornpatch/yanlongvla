@@ -399,13 +399,14 @@ AQLM shrinks the backbone about 3 times more than the others. This shrink is pas
 </div>
 
 <div class="item" id="E5">
-<h3>E5. Quantizer-seed floor (A5) and pi0.5 FP re-run (A13) &nbsp;<span class="badge run">RUNNING</span></h3>
+<h3>E5. Quantizer-seed floor (A5) <span class="badge run">RUNNING</span> and pi0.5 FP re-run (A13) <span class="badge ok">ANSWERED</span></h3>
 <dl>
 <dt>Question</dt><dd>(A5) How much does one quantization draw move the Bridge result? (A13) Is the pi0.5 FP value 765 reproducible on our stack?</dd>
 <dt>How</dt><dd>A5: QuIP# 0 sweeps re-quantized with seeds 1 and 2 (all quantizers used seed 0 before). Carrot and stack_cube. A13: pi0.5 FP on the 1000 units in 4 shards, compared unit by unit with the 765 reference.</dd>
 <dt>Code and evidence</dt><dd>Quantizer seed: <a href="https://github.com/thongthornpatch/yanlongvla/blob/baselines-nov9-shrink-fp-repro/baselines/quantize_quip.py#L60"><code>quantize_quip.py <code>QUANT_SEED</code></code></a>, rows <code>quip_w2s1</code>, <code>quip_w2s2</code> in <a href="https://github.com/thongthornpatch/yanlongvla/blob/baselines-nov9-shrink-fp-repro/baselines/groot/jobs/groot.pbs#L108"><code>groot.pbs</code></a>. pi0.5 re-run script: <a href="https://github.com/thongthornpatch/yanlongvla/blob/baselines-nov9-shrink-fp-repro/baselines/jobs/a13_pi05_fp_plus1000.pbs"><code>jobs/a13_pi05_fp_plus1000.pbs</code></a>.</dd>
-<dt>Status</dt><dd>A5: quantization is done, evaluation is queued. A13: the first attempt failed after 2 minutes (our script used a simulator path that no longer exists). We fixed the path and resubmitted at 22:44. The four jobs wait in the queue.</dd>
-<dt>Next</dt><dd>Read both when they finish. Expected: the A13 total inside about ±1.5 points of 765.</dd>
+<dt>Result</dt><dd><b>A13:</b> our pi0.5 FP gets 774 of 1000. Your reference is 765. Difference +0.9 points [-1.6, +3.2]; 47 units up and 38 down (8.5% of units differ, as for any small numeric change). Camera viewpoints 377 against 372; robot initial states 397 against 393. The pi0.5 FP reference reproduces on our stack.</dd>
+<dt>Status</dt><dd>A13 is answered. A5: both quantizations are done and the Bridge evaluations run now (carrot and stack_cube).</dd>
+<dt>Next</dt><dd>Read A5 when it finishes. It shows how much one quantization draw moves the Bridge result.</dd>
 </dl>
 </div>
 

@@ -3,6 +3,7 @@
 Updated 2026-11-02 (the act-order + MSE + 10% damping row filled in from `G36`). Source of every number: `DECISIONS.md` (π0.5: STATUS.md of the README run; GR00T: G21 to G26 and later). Bits per weight: **whole-model** (every stored tensor counted; the headline) and **linear** (the 2-bit payload over the quantized Linear layers). QuIP#: the official configuration (10 tuning sweeps) is the main row; the 0-sweep row is an appendix row (footnote 1).
 
 ## π0.5-LIBERO (FP 765/1000; the 2-bit base `original_2bit` 704/1000)
+FP check (audit A13, 10 Nov): the FP value 765 is the mentor's published row. Our own FP run on our stack (same 1000 units, same seeds, `fp_w16` = official pi05_libero PyTorch port, RTX PRO 6000 Blackwell) gets 774 of 1000: +0.9 points [-1.6, +3.2] against 765; 47 units up, 38 down (85 of 1000 units differ, 8.5%). So the FP reference reproduces inside the noise. Camera viewpoints 377 against 372, robot initial states 397 against 393.
 | row | whole bpw | linear bpw | Plus 1000 | vs FP (pp, 95% CI) | vs original_2bit (pp, 95% CI) |
 |---|---|---|---|---|---|
 | QTIP W2 | 2.9255 | 2.0237 | 726 | -3.9 (-7.4, -0.7) | +2.2 (-1.6, +6.4) |
