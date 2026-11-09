@@ -104,13 +104,13 @@ All numbers come from complete runs with a <code>.done</code> file. Runs that ar
 <tr><td>carrot_on_plate</td><td class="n">58</td><td class="n">75 (62.5)</td><td class="n">93 (77.5)</td><td class="n">107 (89.2)</td><td class="n">98 (81.7)</td><td class="n">97 (80.8)</td><td class="n">87 (72.5)</td><td class="n">102 (85.0)</td></tr>
 <tr><td>stack_cube</td><td class="n">48</td><td class="n">36 (30.0)</td><td class="n">72 (60.0)</td><td class="n">69 (57.5)</td><td class="n">66 (55.0)</td><td class="n">81 (67.5)</td><td class="n">62 (51.7)</td><td class="n">69 (57.5)</td></tr>
 <tr><td>put_eggplant_in_basket</td><td class="n">53</td><td class="n">56 (46.7)</td><td class="n">27 (22.5)</td><td class="n">41 (34.2)</td><td class="n">51 (42.5)</td><td class="n">52 (43.3)</td><td class="n">81 (67.5)</td><td class="n">78 (65.0)</td></tr>
-<tr><td>put_eggplant_in_sink</td><td class="n">2</td><td class="n">0 (0.0)</td><td class="n">4 (3.3)</td><td class="n">6 (5.0)</td><td class="n"><span class="badge run">running</span></td><td class="n">0 (0.0)</td><td class="n">3 (2.5)</td><td class="n">1 (0.8)</td></tr>
-<tr><td>open_drawer</td><td class="n">100</td><td class="n">120 (100)</td><td class="n">118 (98.3)</td><td class="n">117 (97.5)</td><td class="n"><span class="badge run">running</span></td><td class="n">120 (100)</td><td class="n">120 (100)</td><td class="n">120 (100)</td></tr>
-<tr><td>close_drawer</td><td class="n">97</td><td class="n">115 (95.8)</td><td class="n">117 (97.5)</td><td class="n">118 (98.3)</td><td class="n"><span class="badge run">running</span></td><td class="n">120 (100)</td><td class="n">119 (99.2)</td><td class="n">120 (100)</td></tr>
-<tr><th>Total of 840</th><th class="n">62.3%</th><th class="n">503 (59.9)</th><th class="n">531 (63.2)</th><th class="n">565 (67.3)</th><th class="n">not complete</th><th class="n">564 (67.1)</th><th class="n">527 (62.7)</th><th class="n">587 (69.9)</th></tr>
-<tr><th>Difference to FP (points)</th><th></th><th class="n">-</th><th class="n">+3.3</th><th class="n">+7.4</th><th class="n">-</th><th class="n">+7.3</th><th class="n">+2.9</th><th class="n">+10.0 [+6.5, +13.8]</th></tr>
+<tr><td>put_eggplant_in_sink</td><td class="n">2</td><td class="n">0 (0.0)</td><td class="n">4 (3.3)</td><td class="n">6 (5.0)</td><td class="n">3 (2.5)</td><td class="n">0 (0.0)</td><td class="n">3 (2.5)</td><td class="n">1 (0.8)</td></tr>
+<tr><td>open_drawer</td><td class="n">100</td><td class="n">120 (100)</td><td class="n">118 (98.3)</td><td class="n">117 (97.5)</td><td class="n">112 (93.3)</td><td class="n">120 (100)</td><td class="n">120 (100)</td><td class="n">120 (100)</td></tr>
+<tr><td>close_drawer</td><td class="n">97</td><td class="n">115 (95.8)</td><td class="n">117 (97.5)</td><td class="n">118 (98.3)</td><td class="n">119 (99.2)</td><td class="n">120 (100)</td><td class="n">119 (99.2)</td><td class="n">120 (100)</td></tr>
+<tr><th>Total of 840</th><th class="n">62.3%</th><th class="n">503 (59.9)</th><th class="n">531 (63.2)</th><th class="n">565 (67.3)</th><th class="n">542 (64.5)</th><th class="n">564 (67.1)</th><th class="n">527 (62.7)</th><th class="n">587 (69.9)</th></tr>
+<tr><th>Difference to FP (points)</th><th></th><th class="n">-</th><th class="n">+3.3</th><th class="n">+7.4</th><th class="n">+4.6 [0.0, +9.2]</th><th class="n">+7.3</th><th class="n">+2.9</th><th class="n">+10.0 [+6.5, +13.8]</th></tr>
 </table></div>
-<p class="note">QuIP# 10 sweeps: 4 of 7 tasks are complete (308 of 480; QuIP# 0 sweeps gets 324 and FP 268 on the same 4 tasks). The other 3 tasks are running or waiting. NVIDIA's published values come from one run of 100 episodes with their own command. They are not on the same layout list as our protocol (see branch A1).</p>
+<p class="note">QuIP# 10 sweeps (official), all 7 tasks complete: 542 of 840. Against FP: +4.6 points [0.0, +9.2]. Against QuIP# 0 sweeps: -2.7 [-6.5, +1.0]. It is lower on spoon (93 against 107) and open_drawer (112 against 117), and about equal elsewhere. NVIDIA's published values come from one run of 100 episodes with their own command. They are not on the same layout list as our protocol (see branch A1).</p>
 
 <h3>2.3 GR00T N1.7 on SimplerEnv-Fractal (Google Robot, 100 episodes per family, 600 per row)</h3>
 <div class="scroll"><table>
@@ -381,11 +381,11 @@ AQLM shrinks the backbone about 3 times more than the others. This shrink is pas
 </div>
 
 <div class="item" id="E3">
-<h3>E3. Selection bias and configuration (A14, A15) &nbsp;<span class="badge ok">ANSWERED</span> <span class="badge run">A15 RUNNING</span></h3>
+<h3>E3. Selection bias and configuration (A14, A15) &nbsp;<span class="badge ok">ANSWERED</span></h3>
 <dl>
 <dt>Result</dt><dd><ul>
 <li><b>A14:</b> only VPTQ was chosen by score (best of 6 variants on LIBERO-Plus). Expected bias 1.2 points (at most 2.3). No ranking changes. RESULTS.md has the sentence.</li>
-<li><b>A15:</b> the Bridge QuIP# row is the 0-sweeps row, not the official 10 sweeps. The official row is running (4 of 7 tasks complete: 93, 98, 66, 51; 0 sweeps: 107, 107, 69, 41). On LIBERO-Plus, official 10 sweeps is 2.3 points below 0 sweeps.</li></ul></dd>
+<li><b>A15:</b> the Bridge QuIP# row is the 0-sweeps row, not the official 10 sweeps. The official row is now complete: 542 of 840 (64.5%), +4.6 [0.0, +9.2] against FP and -2.7 [-6.5, +1.0] against 0 sweeps. On LIBERO-Plus, official 10 sweeps is also 2.3 points below 0 sweeps. So the official default is the lower of the two QuIP# rows on both benchmarks, and the 0-sweeps row is not a favourable choice for the headline.</li></ul></dd>
 <dt>Code and evidence</dt><dd>Analysis: <a href="https://github.com/thongthornpatch/yanlongvla/blob/baselines-nov9-shrink-fp-repro/baselines/explore_reports/l2/PART_I.md"><code>explore_reports/l2/PART_I.md</code></a>, <a href="https://github.com/thongthornpatch/yanlongvla/blob/baselines-nov9-shrink-fp-repro/baselines/explore_reports/l2/a14_a5.py"><code>explore_reports/l2/a14_a5.py</code></a>. Text: <a href="https://github.com/thongthornpatch/yanlongvla/blob/baselines-nov9-shrink-fp-repro/baselines/RESULTS.md"><code>RESULTS.md</code></a>.</dd>
 </dl>
 </div>
@@ -444,7 +444,6 @@ AQLM shrinks the backbone about 3 times more than the others. This shrink is pas
 <div class="box">
 <b>Running or queued (about 10 jobs):</b>
 <ul>
-<li>Official QuIP# 10 sweeps on Bridge: sink, open_drawer, close_drawer (A15).</li>
 <li>QuIP# with quantizer seeds 1 and 2, carrot and stack_cube (A5).</li>
 <li>pi0.5 FP re-run, 4 shards of 250 units (A13).</li>
 </ul>
@@ -454,7 +453,6 @@ AQLM shrinks the backbone about 3 times more than the others. This shrink is pas
 <li>Split the orth error by group, then a matched-structure noise test (B4).</li>
 <li>AQLM without its shrink part (D).</li>
 <li>Optional: matched-noise test for audit A7, and a seeded 1-env Fractal runner for per-episode pairing (A11).</li>
-<li>Fill the QuIP# 10-sweeps column and the paired statistics.</li>
 </ol>
 </div>
 
