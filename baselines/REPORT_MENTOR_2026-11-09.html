@@ -145,7 +145,7 @@ All numbers come from complete runs with a <code>.done</code> file. Runs that ar
         </ul></li>
       <li><a href="#C"><b>C. Does the shrink help outside Bridge?</b></a> &nbsp;<span class="badge ok">ANSWERED: no</span></li>
       <li><a href="#D"><b>D. Why is AQLM different on Bridge?</b></a> &nbsp;<span class="badge part">PARTLY</span></li>
-      <li><a href="#E"><b>E. Are our measurements stable and fair?</b></a> &nbsp;<span class="badge ok">MOSTLY ANSWERED</span> <span class="badge run">3 tests RUNNING</span></li>
+      <li><a href="#E"><b>E. Are our measurements stable and fair?</b></a> &nbsp;<span class="badge ok">ANSWERED</span></li>
       <li><a href="#F"><b>F. Method choices that need the mentor</b></a> &nbsp;<span class="badge open">OPEN: MENTOR</span></li>
     </ul></li>
 </ul>
@@ -399,14 +399,15 @@ AQLM shrinks the backbone about 3 times more than the others. This shrink is pas
 </div>
 
 <div class="item" id="E5">
-<h3>E5. Quantizer-seed floor (A5) <span class="badge run">RUNNING</span> and pi0.5 FP re-run (A13) <span class="badge ok">ANSWERED</span></h3>
+<h3>E5. Quantizer-seed floor (A5) and pi0.5 FP re-run (A13) &nbsp;<span class="badge ok">ANSWERED</span></h3>
 <dl>
 <dt>Question</dt><dd>(A5) How much does one quantization draw move the Bridge result? (A13) Is the pi0.5 FP value 765 reproducible on our stack?</dd>
 <dt>How</dt><dd>A5: QuIP# 0 sweeps re-quantized with seeds 1 and 2 (all quantizers used seed 0 before). Carrot and stack_cube. A13: pi0.5 FP on the 1000 units in 4 shards, compared unit by unit with the 765 reference.</dd>
 <dt>Code and evidence</dt><dd>Quantizer seed: <a href="https://github.com/thongthornpatch/yanlongvla/blob/baselines-nov9-shrink-fp-repro/baselines/quantize_quip.py#L60"><code>quantize_quip.py <code>QUANT_SEED</code></code></a>, rows <code>quip_w2s1</code>, <code>quip_w2s2</code> in <a href="https://github.com/thongthornpatch/yanlongvla/blob/baselines-nov9-shrink-fp-repro/baselines/groot/jobs/groot.pbs#L108"><code>groot.pbs</code></a>. pi0.5 re-run script: <a href="https://github.com/thongthornpatch/yanlongvla/blob/baselines-nov9-shrink-fp-repro/baselines/jobs/a13_pi05_fp_plus1000.pbs"><code>jobs/a13_pi05_fp_plus1000.pbs</code></a>.</dd>
 <dt>Result</dt><dd><b>A13:</b> our pi0.5 FP gets 774 of 1000. Your reference is 765. Difference +0.9 points [-1.6, +3.2]; 47 units up and 38 down (8.5% of units differ, as for any small numeric change). Camera viewpoints 377 against 372; robot initial states 397 against 393. The pi0.5 FP reference reproduces on our stack.</dd>
-<dt>Status</dt><dd>A13 is answered. A5: both quantizations are done and the Bridge evaluations run now (carrot and stack_cube).</dd>
-<dt>Next</dt><dd>Read A5 when it finishes. It shows how much one quantization draw moves the Bridge result.</dd>
+<dt>Result A5</dt><dd>QuIP# 0 sweeps, quantizer seed 0 (stored row) / 1 / 2, successes of 120: carrot 107 / 87 / 95 (FP 75); stack_cube 69 / 69 / 57 (FP 36). One quantization draw moves a task by up to 20 episodes. The gain over FP is positive in all three draws (carrot +12 to +32, stack_cube +21 to +33). The stored seed-0 row is the highest draw on carrot, so the headline carrot gain is probably 5 to 10 episodes too high.</dd>
+<dt>Status</dt><dd>A5 and A13 are answered.</dd>
+<dt>Next</dt><dd>None for A5. Decision for the mentor: report the mean of several quantizer draws for the Bridge rows? (We recommend 3 draws for the main 2-bit rows.)</dd>
 </dl>
 </div>
 
@@ -443,15 +444,14 @@ AQLM shrinks the backbone about 3 times more than the others. This shrink is pas
 
 <h2 id="next">5. What runs now, and what comes next</h2>
 <div class="box">
-<b>Running or queued (about 10 jobs):</b>
+<b>Running or queued (6 jobs):</b>
 <ul>
-<li>QuIP# with quantizer seeds 1 and 2, carrot and stack_cube (A5).</li>
-<li>pi0.5 FP re-run, 4 shards of 250 units (A13).</li>
+<li>B4 split: the orthogonal QuIP# error on the backbone only (<code>orbb</code>) and on the action head only (<code>orhd</code>), on carrot, stack_cube and basket.</li>
 </ul>
 <b>Next, in this order:</b>
 <ol>
 <li>WiSE-FT test: needs the pretrained N1.7 base model. We look up its name and download it (B3).</li>
-<li>Split the orth error by group, then a matched-structure noise test (B4).</li>
+<li>Read the orth split (<code>orbb</code>, <code>orhd</code>), then a matched-structure noise test (B4).</li>
 <li>AQLM without its shrink part (D).</li>
 <li>Optional: matched-noise test for audit A7, and a seeded 1-env Fractal runner for per-episode pairing (A11).</li>
 </ol>
