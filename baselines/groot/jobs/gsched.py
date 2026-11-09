@@ -292,6 +292,12 @@ def build_tasks():
     for fe in ('fe1', 'fe2', 'fent1'):   # X3 / A12 (9 Nov): with a new env per episode, are two runs bit-identical (fe1 vs fe2) and is --no-env-termination identical before the first success (fe1 vs fent1)?
         for bt in ('widowx_carrot_on_plate', 'widowx_put_eggplant_in_basket'):
             add(f'b5__ev__{fe}__{bt}', ['b5__vk'], 1.0)
+    for orow in ('orbb', 'orhd'):   # B4 (10 Nov): the orthogonal QuIP# error (no weight shrink) on the backbone only / the action head only; carrot, stack_cube, basket
+        ot = ['widowx_carrot_on_plate', 'widowx_stack_cube', 'widowx_put_eggplant_in_basket']
+        add(f'bq__mix__{orow}', ['bq__imp__quip_w2'], 0.2)
+        for bt in ot:
+            add(f'b5__ev__{orow}__{bt}', [f'bq__mix__{orow}', 'b5__vk'], 0.7)
+        add(f'bq__fin__{orow}', [f'b5__ev__{orow}__{bt}' for bt in ot], 0.1)
     add('bq__mix__s6bb84', ['bq__imp__quip_w2'], 0.2)   # S6 (9 Nov): AQLM shrinks the backbone by c = -0.156 (QuIP# -0.054); does a plain 0.84 W on the backbone give AQLM's pattern (spoon -46, basket +25)?
     s6 = ['widowx_spoon_on_towel', 'widowx_carrot_on_plate', 'widowx_stack_cube', 'widowx_put_eggplant_in_basket']
     for bt in s6:
