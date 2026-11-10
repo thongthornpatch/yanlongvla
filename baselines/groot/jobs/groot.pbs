@@ -373,7 +373,7 @@ t_bq() {   # t_bq <task>: GOAL v6 2c, 2-bit rows on SimplerEnv-Bridge (as t_f5; 
     qk) t_qk "$row" "$key" ;;
     imp) t_imp "$row" && rm -rf "$G/q/$row" ;;   # quantizer outputs are not needed once the checkpoint and its quant.json exist (GOAL v6 2c disk budget)
     fin) local tk=(); [[ $row == nz* ]] && tk=(--tasks widowx_spoon_on_towel,widowx_carrot_on_plate,widowx_stack_cube)   # H4 levels run 3 tasks
-      [[ $row == mx* || $row == gr105 || $row == quip_w2s* || $row == wf[0-9][0-9] ]] && tk=(--tasks widowx_carrot_on_plate,widowx_stack_cube)   # X5 / X6 mixed rows and A5 seed rows run 2 tasks
+      [[ $row == mx* || $row == gr105 || $row == quip_w2s* || $row == wf90 || $row == wf50 ]] && tk=(--tasks widowx_carrot_on_plate,widowx_stack_cube)   # X5 / X6 mixed rows and A5 seed rows run 2 tasks
       [[ $row == orbb || $row == orhd ]] && tk=(--tasks widowx_carrot_on_plate,widowx_stack_cube,widowx_put_eggplant_in_basket)   # B4 (10 Nov): orth error on one group, 3 tasks
       [[ $row == s6bb84 ]] && tk=(--tasks widowx_spoon_on_towel,widowx_carrot_on_plate,widowx_stack_cube,widowx_put_eggplant_in_basket)   # S6: AQLM-sized backbone shrink
       [[ $row == w7s92 ]] && tk=(--tasks widowx_spoon_on_towel,widowx_put_eggplant_in_basket,widowx_put_eggplant_in_sink,widowx_open_drawer,widowx_close_drawer)   # W7: carrot / stack_cube of 0.92 W are mxs92

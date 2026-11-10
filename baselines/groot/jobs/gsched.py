@@ -296,7 +296,13 @@ def build_tasks():
         add(f'bq__mix__{wrow}', ['bq__imp__quip_w2'], 0.2)
         for bt in ('widowx_carrot_on_plate', 'widowx_stack_cube'):
             add(f'b5__ev__{wrow}__{bt}', [f'bq__mix__{wrow}', 'b5__vk'], 0.7)
-        add(f'bq__fin__{wrow}', [f'b5__ev__{wrow}__{bt}' for bt in ('widowx_carrot_on_plate', 'widowx_stack_cube')], 0.1)
+        wtasks = ['widowx_carrot_on_plate', 'widowx_stack_cube']
+        if wrow == 'wf75':   # H10 (10 Nov, pre-registered): wf75 on all 7 tasks
+            wtasks = list(B5_TASKS)
+            for bt in B5_TASKS:
+                if bt not in ('widowx_carrot_on_plate', 'widowx_stack_cube'):
+                    add(f'b5__ev__{wrow}__{bt}', [f'bq__mix__{wrow}', 'b5__vk'], 0.7)
+        add(f'bq__fin__{wrow}', [f'b5__ev__{wrow}__{bt}' for bt in wtasks], 0.1)
     for orow in ('orbb', 'orhd'):   # B4 (10 Nov): the orthogonal QuIP# error (no weight shrink) on the backbone only / the action head only; carrot, stack_cube, basket
         ot = ['widowx_carrot_on_plate', 'widowx_stack_cube', 'widowx_put_eggplant_in_basket']
         add(f'bq__mix__{orow}', ['bq__imp__quip_w2'], 0.2)
