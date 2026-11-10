@@ -23,8 +23,9 @@ src, base, out = Path(a.source), Path(a.base), Path(a.out)
 part = out.with_name(out.name + '.partial')
 shutil.rmtree(part, ignore_errors=True)
 part.mkdir(parents=True)
+SKIP = ('rng_state', 'global_step')
 for f in src.iterdir():
-    if f.name != 'model.safetensors':
+    if f.suffix != '.safetensors' and not f.name.startswith(SKIP) and f.name not in ('scheduler.pt', 'zero_to_fp32.py', 'latest'):
         (shutil.copytree if f.is_dir() else shutil.copy2)(f, part / f.name)
 targets = set(json.loads(Path(a.error_json).read_text()))
 base_index = {}   # key -> file
@@ -34,22 +35,24 @@ for f in sorted(base.glob('*.safetensors')):
             base_index[k] = f
 missing = sorted(k for k in targets if k not in base_index)
 assert not missing, f'{len(missing)} target tensors are not in the base, e.g. {missing[:3]}'
-tensors, done, dist = {}, 0, []
-with safe_open(src / 'model.safetensors', 'pt') as fs:
-    meta = fs.metadata()
-    for k in sorted(fs.keys()):
-        w = fs.get_tensor(k)
-        if k in targets:
-            with safe_open(base_index[k], 'pt') as fb:
-                b = fb.get_tensor(k)
-            assert b.shape == w.shape, (k, b.shape, w.shape)
-            d = w.double() - b.double()
-            dist.append(float(d.norm() / b.double().norm().clamp_min(1e-12)))
-            w = (b.double() + a.alpha * d).to(w.dtype)
-            done += 1
-        tensors[k] = w.contiguous()
+done, dist = 0, []
+for sf in sorted(src.glob('*.safetensors')):   # one file (Bridge) or shards (Fractal): same file names in the output
+    tensors = {}
+    with safe_open(sf, 'pt') as fs:
+        meta = fs.metadata()
+        for k in sorted(fs.keys()):
+            w = fs.get_tensor(k)
+            if k in targets:
+                with safe_open(base_index[k], 'pt') as fb:
+                    b = fb.get_tensor(k)
+                assert b.shape == w.shape, (k, b.shape, w.shape)
+                d = w.double() - b.double()
+                dist.append(float(d.norm() / b.double().norm().clamp_min(1e-12)))
+                w = (b.double() + a.alpha * d).to(w.dtype)
+                done += 1
+            tensors[k] = w.contiguous()
+    save_file(tensors, str(part / sf.name), metadata=meta)
 assert done == len(targets), (done, len(targets))
-save_file(tensors, str(part / 'model.safetensors'), metadata=meta)
 (part / 'wise.json').write_text(json.dumps(dict(source=str(src), base=str(base), alpha=a.alpha, tensors=done,
                                                  rel_distance_mean=sum(dist) / len(dist), rel_distance_max=max(dist)), indent=1))
 shutil.rmtree(out, ignore_errors=True)

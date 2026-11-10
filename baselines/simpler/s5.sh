@@ -121,6 +121,12 @@ assert done == len(keys), (done, len(keys))
 shutil.rmtree(out, ignore_errors=True); part.rename(out); print('scaled', done, 'tensors into', out)
 PY
       ;;
+    wf75mk)   # X28 (10 Nov): Fractal checkpoint moved 25% of the way back to the pretrained base (alpha 0.75, 432 weights), sharded; wise.py
+      "$PY_G" "$SRC/groot/wise.py" --source "$S5/checkpoints/fractal" --base "$G/base/GR00T-N1.7-3B" --error-json "$G/s5bq/perturb/aqlm_w2_error.json" --alpha 0.75 --out "$S5/ckpt_wf75/fractal" ;;
+    wf75_*)   # X28: wf75 on one Google Robot family, seed 7, 100 episodes (as fp_* and sh95_*)
+      s5_run "$S5/ckpt_wf75/fractal" "${step#wf75_}" "$S5/eval/wf75" 7 ;;
+    wf75big_*)   # X28: wf75, 500 seeded episodes, flash-attn (as fpbig and sh95big)
+      S5_NEP=500 FA_SITE=$HANDOVER/runs/envs/flash-attn s5_run "$S5/ckpt_wf75/fractal" "${step#*_}" "$S5/eval/wf75_big" 7 ;;
     sh95_*)   # W6: 0.95 W on one Google Robot family, seed 7, 100 episodes (as fp_*, SDPA)
       s5_run "$S5/ckpt_sh95/fractal" "${step#sh95_}" "$S5/eval/sh95" 7 ;;
     sh95big_*)   # W6: 0.95 W, 500 seeded episodes, flash-attn (as fpbig)

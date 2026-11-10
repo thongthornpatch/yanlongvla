@@ -261,6 +261,10 @@ def build_tasks():
         add(f'bq__fin__{mx}', [f'b5__ev__{mx}__{bt}' for bt in ('widowx_carrot_on_plate', 'widowx_stack_cube')], 0.1)
     for k in (1, 2):   # GOAL v8 X17 (G1): Fractal open_drawer with one env, no seed (2 repeats), and 500 seeded episodes
         add(f's5__fp1e{k}_open_drawer', ['s5__ckpt', 's5__env', 's5__fa'], 2.0)
+    add('s5__wf75mk', ['s5__ckpt'], 0.3)   # X28 (10 Nov): WiSE-FT alpha 0.75 on Fractal (base nvidia/GR00T-N1.7-3B on scratch), 6 families (seed 7) and open_drawer 500 seeded episodes
+    for fam in ('place_in_closed_drawer', 'open_drawer', 'close_drawer', 'pick_coke_can', 'move_near', 'pick_object'):
+        add(f's5__wf75_{fam}', ['s5__wf75mk', 's5__env'], 1.0)
+    add('s5__wf75big_open_drawer', ['s5__wf75mk', 's5__env', 's5__fa'], 3.5)
     add('s5__sh95mk', ['s5__ckpt'], 0.3)   # W6 (9 Nov): 0.95 W on Fractal, all 6 families (seed 7, as fp_*) and open_drawer with 500 seeded episodes (as fpbig)
     for fam in ('place_in_closed_drawer', 'open_drawer', 'close_drawer', 'pick_coke_can', 'move_near', 'pick_object'):
         add(f's5__sh95_{fam}', ['s5__sh95mk', 's5__env'], 1.0)
